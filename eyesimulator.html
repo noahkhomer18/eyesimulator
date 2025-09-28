@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Vision Impairment Simulator</title>
+<style>
+    :root {
+        --main-color: #A62B0C;
+        --bg-light: #f0f0f2;
+    }
+
+    body {
+        font-family: 'Open Sans', Arial, sans-serif;
+        background: var(--bg-light);
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    /* Top Banner */
+    .top-banner-container {
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 20px;
+        text-align: center;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .top-banner-container h1 {
+        font-size: 24px;
+        color: var(--main-color);
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .top-banner-container p {
+        margin: 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .dropdown-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .dropdown-container select {
+        width: 200px;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #fff;
+        color: #333;
+        font-family: 'Open Sans', Arial, sans-serif;
+        cursor: pointer;
+    }
+
+    .dropdown-container select:hover {
+        border-color: var(--main-color);
+    }
+
+    /* Info Box for Impairment Details */
+    .impairment-info {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 600px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .impairment-info h2 {
+        font-size: 20px;
+        color: var(--main-color);
+        margin: 0 0 10px 0;
+        font-weight: 700;
+    }
+
+    .impairment-info p {
+        font-size: 14px;
+        color: #555;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .content-container {
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .viewer-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .viewer-box {
+        background: #eaeaea center center no-repeat;
+        background-size: cover;
+        border: 1px solid #ddd;
+        position: relative;
+        transition: all 500ms ease;
+        border-radius: 8px;
+        overflow: hidden;
+        width: 45%; 
+        min-width: 300px;
+        max-width: 600px;
+    }
+
+    .viewer-box .inner {
+        background-position: center center;
+        background-size: cover;
+        width: 100%;
+        padding-top: 40%;
+        position: relative;
+    }
+
+    /* Blur Classes */
+    .active1 { filter: blur(1px); }
+    .active2 { filter: blur(2px); }
+    .active3 { filter: blur(3px); }
+    .active4 { filter: blur(4px); }
+    .active5 { filter: blur(5px); }
+    .active6 { filter: blur(6px); }
+    .active7 { filter: blur(7px); }
+    .active8 { filter: blur(8px); }
+    .active9 { filter: blur(9px); }
+    .active10 { filter: blur(10px); }
+
+    footer {
+        text-align: center;
+        margin: 40px 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .viewer-box {
+            width: 100%;
+        }
+        .viewer-container {
+            flex-direction: column;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-banner-container" id="topBanner">
+    <h1>Select a Vision Problem</h1>
+    <p>Details about the selected condition will appear here.</p>
+    <div class="dropdown-container">
+        <select id="visionSelect">
+            <option value="">-- Select Vision Problem --</option>
+            <option value="blurred_vision">Blurred Vision</option>
+            <option value="glaucoma">Glaucoma</option>
+            <option value="cataracts">Cataracts</option>
+            <option value="macular_degeneration">Macular Degeneration</option>
+            <option value="night_blindness">Night Blindness</option>
+            <option value="achromatopsia">Achromatopsia (No Color)</option>
+            <option value="reduced_contrast">Reduced Contrast</option>
+            <option value="glare">Glare/Haze</option>
+            <option value="yellow_tint">Yellow Tint</option>
+            <option value="dim_vision">Dim Vision</option>
+            <option value="tunnel_vision">Tunnel Vision</option>
+        </select>
+
+        <select id="imageSelect">
+            <option value="">-- Select Image --</option>
+            <option value="family_dinner">Family Dinner</option>
+            <option value="freeway_entrance_signs">Freeway Entrance Signs</option>
+            <option value="game_day_snacks">Game Day Snacks</option>
+            <option value="gentle_stream_rolling_through_the_woods">Gentle Stream Rolling Through The Woods</option>
+            <option value="houston_tx_skyline_on_a_sunny_day">Houston TX Skyline On A Sunny Day</option>
+            <option value="looking_down_a_supermarket_aisle">Looking Down A Supermarket Aisle</option>
+            <option value="playing_with_children_in_the_backyard">Playing With Children In The Backyard</option>
+            <option value="reading_a_restaurant_menu">Reading A Restaurant Menu</option>
+            <option value="shopping_at_the_farmers_market">Shopping At The Farmers Market</option>
+            <option value="using_my_smartphone">Using My Smartphone</option>
+            <option value="walking_along_a_garden_path">Walking Along A Garden Path</option>
+            <option value="watching_a_movie_at_home">Watching A Movie At Home</option>
+            <option value="christmas_morning">Christmas Morning</option>
+            <option value="crossing_a_busy_street">Crossing A Busy Street</option>
+        </select>
+    </div>
+</div>
+
+<div class="impairment-info" id="impairmentInfo">
+    <h2 id="impairmentTitle">No Impairment Selected</h2>
+    <p id="impairmentDesc">Select a vision problem to see its details.</p>
+</div>
+
+<div class="content-container">
+    <div class="viewer-container">
+        <div class="viewer-box" id="perfectVisionViewer">
+            <div class="inner" id="perfectInner"></div>
+        </div>
+        <div class="viewer-box" id="simviewer">
+            <div class="inner" id="siminner"></div>
+        </div>
+    </div>
+</div>
+
+<footer>© (Blue Collar Marketing Group)</footer>
+
+<script>
+    const imageMap = {
+        "family_dinner": "https://i.ibb.co/8gmqpyQ/Family-Dinner.jpg",
+        "freeway_entrance_signs": "https://i.ibb.co/DKr7s18/Freeway-entrance-signs.jpg",
+        "game_day_snacks": "https://i.ibb.co/G3gHLHR/Game-Day-snacks.jpg",
+        "gentle_stream_rolling_through_the_woods": "https://i.ibb.co/MGBJ7td/Gentle-stream-rolling-through-the-woods.jpg",
+        "houston_tx_skyline_on_a_sunny_day": "https://i.ibb.co/f1L4Njn/Houston-TX-skyline-on-a-sunny-day.jpg",
+        "looking_down_a_supermarket_aisle": "https://i.ibb.co/WD3KhFC/Looking-down-a-supermarket-aisle.jpg",
+        "playing_with_children_in_the_backyard": "https://i.ibb.co/dJp4fdV/Playing-with-children-in-the-backyard.jpg",
+        "reading_a_restaurant_menu": "https://i.ibb.co/xjpv31S/Reading-a-restaurant-menu.jpg",
+        "shopping_at_the_farmers_market": "https://i.ibb.co/QQtvSVZ/Shopping-at-the-farmers-market.jpg",
+        "using_my_smartphone": "https://i.ibb.co/F4x1Nbf/Using-my-smartphone.jpg",
+        "walking_along_a_garden_path": "https://i.ibb.co/MsRvyfh/Walking-along-a-garden-path.jpg",
+        "watching_a_movie_at_home": "https://i.ibb.co/wBTpGMc/Watching-a-movie-at-home.jpg",
+        "christmas_morning": "https://i.ibb.co/PTv2qLV/Christmas-morning.jpg",
+        "crossing_a_busy_street": "https://i.ibb.co/hcFzpKJ/Crossing-a-busy-street.jpg"
+    };
+
+    const visionMap = {
+        "blurred_vision": { name: "Blurred Vision", desc: "Objects appear fuzzy and unclear.", blurClass: "active2" },
+        "glaucoma": { name: "Glaucoma", desc: "Loss of peripheral vision leading to tunnel-like sight.", overlayImage: "https://sightcentertoledo.org/wp-content/uploads/2021/04/glaucoma2.png", blurClass: "active1" },
+        "cataracts": { name: "Cataracts", desc: "Cloudy lens causing hazy or foggy vision.", overlayImage: "https://sightcentertoledo.org/wp-content/uploads/2021/04/cataracts2.png", blurClass: "active2" },
+        "macular_degeneration": { name: "Macular Degeneration", desc: "Central vision loss, making it hard to see details.", overlayImage: "https://sightcentertoledo.org/wp-content/uploads/2021/04/macular-degeneration2.png", blurClass: "active1" },
+        "night_blindness": { name: "Night Blindness", desc: "Difficulty seeing in low light or at night.", blurClass: "active1", overlayCSS: "background: rgba(0,0,0,0.5);" },
+        "achromatopsia": { name: "Achromatopsia (No Color)", desc: "Complete color blindness, only shades of gray.", filterCSS: "grayscale(100%)" },
+        "reduced_contrast": { name: "Reduced Contrast", desc: "Difficulty distinguishing between similar tones.", filterCSS: "contrast(70%) brightness(110%)" },
+        "glare": { name: "Glare/Haze", desc: "Light scattering causes bright glare and reduced detail.", overlayCSS: "background: rgba(255,255,255,0.3);" },
+        "yellow_tint": { name: "Yellow Tint", desc: "A yellowish filter over vision.", overlayCSS: "background: rgba(255,230,150,0.2);" },
+        "dim_vision": { name: "Dim Vision", desc: "Reduced brightness, everything looks darker.", overlayCSS: "background: rgba(0,0,0,0.5);" },
+        "tunnel_vision": { name: "Tunnel Vision", desc: "Only central vision is clear, peripheral vision lost.", overlayCSS: "background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 90%);" }
+    };
+
+    const picbox = document.getElementById("simviewer");
+    const impbox = document.getElementById("siminner");
+    const perfectBox = document.getElementById("perfectInner");
+    const impairmentTitle = document.getElementById("impairmentTitle");
+    const impairmentDesc = document.getElementById("impairmentDesc");
+
+    let currentVision = "";
+    let currentImage = "";
+
+    function removeActiveClasses() {
+        for (let i=1; i<=10; i++) {
+            picbox.classList.remove("active"+i);
+        }
+    }
+
+    function updateInfoBox() {
+        if (!currentVision) {
+            impairmentTitle.textContent = "No Impairment Selected";
+            impairmentDesc.textContent = "Select a vision problem to see its details.";
+            return;
+        }
+        const vData = visionMap[currentVision];
+        impairmentTitle.textContent = "Selected Vision Problem: " + vData.name;
+        impairmentDesc.textContent = vData.desc;
+    }
+
+    function simulateVision() {
+        // If either is not chosen, don't display images
+        if (!currentVision || !currentImage) {
+            perfectBox.style.backgroundImage = "none";
+            picbox.style.backgroundImage = "none";
+            updateInfoBox();
+            return;
+        }
+
+        const baseUrl = imageMap[currentImage] + "?auto=format&fit=crop&w=800&q=80";
+
+        // Perfect vision on the left
+        perfectBox.style.backgroundImage = `url('${baseUrl}')`;
+
+        // Impaired on the right
+        picbox.style.backgroundImage = `url('${baseUrl}')`;
+
+        // Reset filters and overlays
+        removeActiveClasses();
+        picbox.style.filter = "";
+        impbox.style.background = "none";
+        impbox.style.backgroundImage = "none";
+
+        const vData = visionMap[currentVision];
+
+        // Apply blurClass if present
+        if (vData.blurClass) {
+            picbox.classList.add(vData.blurClass);
+        }
+
+        // Apply filterCSS if present
+        if (vData.filterCSS) {
+            picbox.style.filter = vData.filterCSS;
+        }
+
+        // Apply overlayCSS if present
+        if (vData.overlayCSS) {
+            impbox.setAttribute("style", "");
+            impbox.style.backgroundImage = "none";
+            impbox.setAttribute("style", impbox.getAttribute("style") + vData.overlayCSS);
+        }
+
+        // Apply overlayImage if present
+        if (vData.overlayImage) {
+            impbox.style.backgroundImage = `url('${vData.overlayImage}')`;
+            impbox.style.backgroundSize = "cover";
+            impbox.style.backgroundPosition = "center";
+        }
+
+        updateInfoBox();
+    }
+
+    document.getElementById('visionSelect').addEventListener('change', (e) => {
+        currentVision = e.target.value;
+        simulateVision();
+    });
+
+    document.getElementById('imageSelect').addEventListener('change', (e) => {
+        currentImage = e.target.value;
+        simulateVision();
+    });
+</script>
+
+</body>
+</html>
